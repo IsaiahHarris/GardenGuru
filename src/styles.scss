@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/purple-green.css';
+@import "_variables";
+
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+html, body{
+  margin:0;
+  padding:0;
+  background-color:#eeeeee;
+  height: 100%;
+  width:100%;
+  font-family: $mainFont;
+}

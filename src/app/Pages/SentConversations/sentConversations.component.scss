@@ -1,0 +1,36 @@
+@import '~@angular/material/prebuilt-themes/purple-green.css';
+@import '../../../variables';
+
+.conversations-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  .conversation-body {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background: white;
+    border-radius: 5px;
+    .conversation {
+      background-color: $inboxColor;
+      height: 10vh;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .username {
+        color: white;
+      }
+      .content{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width:75%;
+      }
+    }
+  }
+}

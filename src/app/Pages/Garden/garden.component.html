@@ -1,0 +1,70 @@
+<div class="content-container" *ngIf="!loggedIn">
+  <div class="unauth-container">
+    <div class="secondary-header">
+      <div>
+        <span routerLink="/register">Sign Up</span>
+        or
+        <span routerLink="/login">Log In</span>
+        to access your Garden
+      </div>
+    </div>
+    <div class="feature-description">
+      <div>With an account, you'll be able to:</div>
+      <ul>
+        <li>Manage the crops in your garden</li>
+        <li>Set reminders for watering schedule</li>
+        <li>Get notified when it is time for a harvest</li>
+        <li>Sell your crops in the Marketplace</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- Authenticated view of garden -->
+<div class="content-container" *ngIf="loggedIn">
+  <div class="secondary-header">
+    {{user.first_name}}'s Garden
+  </div>
+  <div class="garden-container">
+    <div class="garden">
+      <div class="card" *ngFor="let crop of garden">
+        <div class="img-container"><img routerLink="/garden/crops/{{crop.id}}" src="{{crop.displayPhoto}}"></div>
+        <div>{{crop.plant.name}}</div>
+        <div class="description">{{crop.garden_description}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="garden-container">
+    <div class="header">Today's Watering Schedule</div>
+    <div class="watering">
+      <div class="card" *ngFor="let plant of plantsToWater">
+        <svg id="{{plant.id}}" (click)="selectForWatering($event)" xmlns="http://www.w3.org/2000/svg" viewBox="-5 -1.5 24 24" width="24"
+          height="24" preserveAspectRatio="xMinYMin" class="jam jam-water-drop-f">
+          <path d='M7 .565c4.667 6.09 7 10.423 7 13a7 7 0 1 1-14 0c0-2.577 2.333-6.91 7-13z' id="{{plant.id}}" /></svg>
+        <div>{{plant.plant.name}}</div>
+        <div class="description">{{plant.garden_description}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="garden-container">
+    <div class="header">Upcoming week's harvests</div>
+    <div class="harvest">
+      <div class="card" *ngFor="let plant of plantsToHarvest">
+        <div class="img-container"><img routerLink="/garden/crops/{{plant.id}}" src="{{plant.displayPhoto}}"></div>
+        <div>{{plant.plant.name}}</div>
+        <div class="description">{{plant.garden_description}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="button-container" *ngIf="showWaterButton">
+    <button class="water-button" (click)="waterPlants()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -2 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-water-drop">
+        <path d='M2 13a5 5 0 0 0 10 0c0-1.726-1.66-5.031-5-9.653C3.66 7.969 2 11.274 2 13zM7 0c4.667 6.09 7 10.423 7 13a7 7 0 0 1-14 0c0-2.577 2.333-6.91 7-13z'
+        /></svg>
+    </button>
+  </div>
+  <button class="add-button" routerLink="addcrop">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-4.5 -4.5 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-plus">
+      <path d='M8.9 6.9v-5a1 1 0 1 0-2 0v5h-5a1 1 0 1 0 0 2h5v5a1 1 0 1 0 2 0v-5h5a1 1 0 1 0 0-2h-5z' />
+    </svg>
+  </button>
+</div>

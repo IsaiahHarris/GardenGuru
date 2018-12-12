@@ -1,0 +1,187 @@
+<div class="content-container" *ngIf="!gardenEditing && crop && loggedIn">
+  <div class="crop-container">
+    <div class="secondary-header">
+      <div>{{crop.plant.name}}</div>
+    </div>
+    <div class="img-container" *ngIf="hasPhoto">
+      <img src="{{currentPhoto}}">
+    </div>
+    <div class="img-scroller" *ngIf="hasPhoto">
+      <div class="left" (click)="previousPhoto()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-arrow-left">
+          <path d='M3.414 7.657l3.95 3.95A1 1 0 0 1 5.95 13.02L.293 7.364a.997.997 0 0 1 0-1.414L5.95.293a1 1 0 1 1 1.414 1.414l-3.95 3.95H13a1 1 0 0 1 0 2H3.414z'
+          /></svg>
+      </div>
+      <div class="img-count">{{imageCounter()}}</div>
+      <div class="right" (click)="nextPhoto()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-arrow-right">
+          <path d='M10.586 5.657l-3.95-3.95A1 1 0 0 1 8.05.293l5.657 5.657a.997.997 0 0 1 0 1.414L8.05 13.021a1 1 0 1 1-1.414-1.414l3.95-3.95H1a1 1 0 1 1 0-2h9.586z'
+          /></svg>
+      </div>
+    </div>
+    <div class="description">{{crop.garden_description}}</div>
+    <div class="date">Expected Harvest Date: </div>
+    <div>{{harvestDate}}</div>
+    <div class="date">Watering Interval:</div>
+    <div>{{crop.watering_interval}} days</div>
+    <div class="date">Next Watering Date:</div>
+    <div>{{wateringDate}}</div>
+    <div class="auth-buttons" *ngIf="correctUser">
+      <button class="edit-button" (click)="editGardenCrop()" *ngIf="correctUser">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2.5 -2.5 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-pencil">
+          <path d='M12.238 5.472L3.2 14.51l-.591 2.016 1.975-.571 9.068-9.068-1.414-1.415zM13.78 3.93l1.414 1.414 1.318-1.318a.5.5 0 0 0 0-.707l-.708-.707a.5.5 0 0 0-.707 0L13.781 3.93zm3.439-2.732l.707.707a2.5 2.5 0 0 1 0 3.535L5.634 17.733l-4.22 1.22a1 1 0 0 1-1.237-1.241l1.248-4.255 12.26-12.26a2.5 2.5 0 0 1 3.535 0z'
+          />
+        </svg>
+      </button>
+      <button class="stand-button" (click)="toggleEdit(crop)" *ngIf="correctUser">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-store">
+          <path d='M6 2H3a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2zM3.01 8v9.965H5V13a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4.965h6.013V8H15c-.768 0-1.47-.289-2-.764A2.989 2.989 0 0 1 11 8H9c-.768 0-1.47-.289-2-.764A2.989 2.989 0 0 1 5 8H3.01zm-2-.754A2.993 2.993 0 0 1 0 5V3a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v2c0 .882-.38 1.676-.987 2.225v10.74a2 2 0 0 1-2 2h-7.64A2.01 2.01 0 0 1 9 20H7a2.01 2.01 0 0 1-.373-.035H3.011a2 2 0 0 1-2-2V7.245zM9 17.966V13H7v4.965h2zM12 2H8v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2zm2 0v3a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-3zm0 9h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1z'
+          />
+        </svg>
+      </button>
+      <button class="delete-button" (click)="toggleDeleteConfirmation()" *ngIf="correctUser">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1.5 -2.5 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-rubber">
+          <path d='M12.728 12.728L8.485 8.485l-5.657 5.657 2.122 2.121a3 3 0 0 0 4.242 0l3.536-3.535zM11.284 17H14a1 1 0 0 1 0 2H3a1 1 0 0 1-.133-1.991l-1.453-1.453a2 2 0 0 1 0-2.828L12.728 1.414a2 2 0 0 1 2.828 0L19.8 5.657a2 2 0 0 1 0 2.828L11.284 17z'
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- moving to stand -->
+<div id="modal-container" *ngIf="movingToStand && loggedIn">
+  <div id="modal-content">
+    <form>
+      <div class="secondary-header">
+        <div>Move To Your Stand</div>
+      </div>
+      <div class="choice-title">Keep plant in garden?</div>
+      <div class="options">
+        <div class="check-true" *ngIf="check" (click)="toggleCheck()">Yes</div>
+        <div class="check-false" *ngIf="!check" (click)="toggleCheck()">No</div>
+      </div>
+      <label for="description">Description</label>
+      <input maxlength="25" type="text" name="description" [(ngModel)]="moveFormData.description">
+      <span class="garden-crop-error" *ngIf="moveDescriptionError" style="color:red">This field is required.</span>
+      <label for="price">Price</label>
+      <input maxlength="25" type="text" name="price" [(ngModel)]="moveFormData.price">
+      <label for="details">Details</label>
+      <textarea name="details" [(ngModel)]="moveFormData.details"></textarea>
+      <span class="garden-crop-error" *ngIf="moveDetailsError" style="color:red">This field is required.</span>
+      <label for="inventory">Inventory</label>
+      <input maxlength="25" type="text" name="inventory" [(ngModel)]="moveFormData.inventory">
+      <span class="garden-crop-error" *ngIf="moveInventoryError" style="color:red">This field only takes numbers larger then
+        zero.
+      </span>
+      <div class="img-selection">
+        <div>Select Photos from Garden</div>
+        <div class="garden-photos">
+          <div class="img-container" *ngFor="let photo of photos">
+            <img src="{{photo}}" (click)="selectPhoto($event)">
+          </div>
+        </div>
+        <label for="photos">Upload Photos</label>
+        <input type="file" name="photo" accept=".jpg, .jpeg, .png" multiple (change)="updatePhotoList($event)">
+      </div>
+      <div class="modal-buttons">
+        <button (click)="moveToStand()" class="submit-button">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -7 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-check">
+            <path d='M5.486 9.73a.997.997 0 0 1-.707-.292L.537 5.195A1 1 0 1 1 1.95 3.78l3.535 3.535L11.85.952a1 1 0 0 1 1.415 1.414L6.193 9.438a.997.997 0 0 1-.707.292z'
+            /></svg>
+        </button>
+        <button (click)="cancelStand()" class="cancel-button">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-close">
+            <path d='M7.314 5.9l3.535-3.536A1 1 0 1 0 9.435.95L5.899 4.485 2.364.95A1 1 0 1 0 .95 2.364l3.535 3.535L.95 9.435a1 1 0 1 0 1.414 1.414l3.535-3.535 3.536 3.535a1 1 0 1 0 1.414-1.414L7.314 5.899z'
+            /></svg>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- For changing water interval and garden_description -->
+<div class="content-container" *ngIf="gardenEditing && loggedIn">
+  <form class="crop-container" enctype="multipart/form-data">
+    <div class="secondary-header">
+      <div>{{crop.plant.name}}</div>
+    </div>
+    <div class="img-container" *ngIf="hasPhoto">
+      <img src="{{currentPhoto}}">
+    </div>
+    <div class="img-scroller" *ngIf="hasPhoto">
+      <div class="left" (click)="previousPhoto()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-arrow-left">
+          <path d='M3.414 7.657l3.95 3.95A1 1 0 0 1 5.95 13.02L.293 7.364a.997.997 0 0 1 0-1.414L5.95.293a1 1 0 1 1 1.414 1.414l-3.95 3.95H13a1 1 0 0 1 0 2H3.414z'
+          /></svg>
+      </div>
+      <div class="img-count" *ngIf="hasPhoto">{{imageCounter()}}</div>
+      <div class="right" (click)="nextPhoto()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-arrow-right">
+          <path d='M10.586 5.657l-3.95-3.95A1 1 0 0 1 8.05.293l5.657 5.657a.997.997 0 0 1 0 1.414L8.05 13.021a1 1 0 1 1-1.414-1.414l3.95-3.95H1a1 1 0 1 1 0-2h9.586z'
+          /></svg>
+      </div>
+    </div>
+    <div class="remove-container" *ngIf="hasPhoto" (click)="tagForRemoval()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-minus-circle">
+        <path d='M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0 2C4.477 20 0 15.523 0 10S4.477 0 10 0s10 4.477 10 10-4.477 10-10 10zM5 9h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2z'
+        /></svg>
+    </div>
+    <div id="photos-marked">{{getPhotosToDelete()}}</div>
+    <div class="editing-body">
+      <label for="garden_description">Change Description</label>
+      <input type="text" name="garden_description" [(ngModel)]="gardenEditFormData.garden_description">
+
+      <span class="garden-crop-error" *ngIf="editGardenDescriptionError" style="color:red">This field is required.</span>
+
+      <label for="watering_interval">Change Watering Interval</label>
+      <select name="watering_interval" [(ngModel)]="gardenEditFormData.watering_interval" (change)="recalculateDate(date, gardenEditFormData.watering_interval)">
+        <option value="0">Select Interval</option>
+        <option value="1">Daily</option>
+        <option value="2">Every Other Day</option>
+        <option value="3">Every Third Day</option>
+        <option value="7">Weekly</option>
+        <option value="14">Every Two Weeks</option>
+      </select>
+      <label for="updated_water_date">Next Watering Date:</label>
+      <div>{{getNewWaterDate()}}</div>
+      <div class="photo-error">{{getPhotoErrors()}}</div>
+      <div class="image-upload">
+        <label for="photos">Upload Photos</label>
+        <input type="file" name="photo" accept=".jpg, .jpeg, .png" multiple (change)="updatePhotoList($event)">
+        <div class="photo-list" *ngFor="let photo of photosToUpload">
+          <div class="photo-name">{{photo.name}}</div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <button class="submit-button" (click)="submitGardenEdit()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -7 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-check">
+      <path d='M5.486 9.73a.997.997 0 0 1-.707-.292L.537 5.195A1 1 0 1 1 1.95 3.78l3.535 3.535L11.85.952a1 1 0 0 1 1.415 1.414L6.193 9.438a.997.997 0 0 1-.707.292z'
+      /></svg>
+  </button>
+  <button class="cancel-button" (click)="cancel()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-close">
+      <path d='M7.314 5.9l3.535-3.536A1 1 0 1 0 9.435.95L5.899 4.485 2.364.95A1 1 0 1 0 .95 2.364l3.535 3.535L.95 9.435a1 1 0 1 0 1.414 1.414l3.535-3.535 3.536 3.535a1 1 0 1 0 1.414-1.414L7.314 5.899z'
+      /></svg>
+  </button>
+</div>
+
+<!-- Delete Modal -->
+<div id="delete-modal" *ngIf="confirmDelete">
+  <div id="delete-modal-content">
+    <div>Delete From Your Garden?</div>
+    <div class="button-container">
+      <button (click)="deleteCrop()">Delete</button>
+      <button (click)="toggleDeleteConfirmation()">Cancel</button>
+    </div>
+  </div>
+</div>
+<div class="loading-modal" *ngIf="showLoading">
+  <div class="loading-spinner">
+    <div class="message" *ngIf="gardenEditing">Editing Your Crop</div>
+    <div class="message" *ngIf="movingToStand">Moving To Your Stand</div>
+    <mat-spinner color="warn" diameter="60"></mat-spinner>
+  </div>
+</div>

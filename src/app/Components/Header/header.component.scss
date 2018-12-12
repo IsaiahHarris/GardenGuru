@@ -1,0 +1,97 @@
+@import '~@angular/material/prebuilt-themes/purple-green.css';
+@import '../../../_variables';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  height: 10%;
+  background: $darkestGreen;
+  align-items: center;
+  z-index: 1;
+  position: fixed;
+  bottom: 90%;
+  width: 100%;
+}
+
+.title {
+  // font-family: "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  // letter-spacing: -3px;
+  // background: -webkit-linear-gradient(skyblue, lightgreen);
+  // -webkit-background-clip: text;
+  // -webkit-text-fill-color: transparent;
+  // padding: 5px;
+}
+
+.magnifier {
+  flex: 1;
+}
+
+#search {
+  height: 28px;
+  width: 28px;
+  margin-right: 20px;
+}
+
+.magnifier img {
+  display: block;
+  height: 80%;
+  margin-left: auto;
+  position: relative;
+  top: 10%;
+  right: 5%;
+  padding-right: 10px;
+  opacity: 0.5;
+  padding: 5px;
+}
+.overlay {
+  width: 50px;
+}
+
+.overlay img {
+  display: block;
+  opacity: 0.5;
+  left: 10px;
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  padding: 5px;
+}
+
+/* // Extra Small devices (smartphones, 0px and up) */
+@media (min-width: 0px) {
+  .header {
+    margin-top: 5px;
+  }
+
+  .overlay,
+  .title,
+  .magnifier {
+    height: 40px;
+  }
+
+  .title {
+    font-size: 2.5em;
+    line-height: 40px;
+  }
+}
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .header {
+    margin-top: 0px;
+  }
+
+  .overlay,
+  .title,
+  .magnifier {
+    height: 70px;
+  }
+
+  .title {
+    font-size: 3em;
+    line-height: 70px;
+  }
+}

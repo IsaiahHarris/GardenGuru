@@ -1,0 +1,55 @@
+@import '~@angular/material/prebuilt-themes/purple-green.css';
+@import '../../../variables';
+
+#search-sidebar {
+  position: fixed;
+  width: 50%;
+  padding: 10px;
+  height: 100%;
+  background: whitesmoke;
+  right: -55%;
+  transition: all 200ms linear;
+  box-shadow: 1px 12px 15px gray;
+  form {
+    background: white;
+    border-radius: 5px;
+    padding: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    select {
+      padding: 5px;
+      font-size: 12px;
+      background: whitesmoke;
+      margin: 5px auto;
+      width: 100%;
+    }
+    span {
+      color: $alertRed;
+    }
+    input {
+      font-size: 12px;
+      background: whitesmoke;
+      border: 1px solid gray;
+      border-radius: 5px;
+      width: 100%;
+      padding: 5px;
+    }
+    button {
+      background: $brightGreen;
+      color: white;
+      box-shadow: $circularShadow;
+      margin-top: 10px;
+      border-radius: 5px;
+      padding: 8px;
+      font-size: 14px;
+      width: 90%;
+    }
+  }
+}
+
+#search-sidebar.active {
+  right: 0px;
+}

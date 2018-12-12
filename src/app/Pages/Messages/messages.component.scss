@@ -1,0 +1,46 @@
+@import '~@angular/material/prebuilt-themes/purple-green.css';
+
+.no-conversations {
+  width: 100%;
+  height: 50vh;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  .no-convo-title {
+    font-size:20px;
+  }
+}
+
+.conversations-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  .conversation-body {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background: white;
+    border-radius: 5px;
+    .conversation {
+      background-color: #49a078;
+      height: 10vh;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .username {
+        color: white;
+      }
+      .content {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 75%;
+      }
+    }
+  }
+}

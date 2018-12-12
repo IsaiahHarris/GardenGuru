@@ -1,0 +1,16 @@
+<div class="no-conversations" *ngIf= "!hasMessages">
+  <div class="no-convo-title">You have no active conversations</div>
+</div>
+
+<div class="conversations-container">
+  <div class="conversation-body">
+    <div class="conversation" *ngFor="let conversation of filtered" routerLink="/conversation/{{conversation.from.id}}">
+      <div class="username">
+        {{conversation.from.username}}
+      </div>
+      <div class="content">
+        {{conversation.content}}
+      </div>
+    </div>
+  </div>
+</div>

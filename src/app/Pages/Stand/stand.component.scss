@@ -1,0 +1,661 @@
+@import '~@angular/material/prebuilt-themes/purple-green.css';
+@import '../../../variables';
+
+.content-container {
+  padding: 20px;
+  height: 120%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: $subFont;
+  .secondary-header {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 15px auto;
+    margin-bottom: 25px;
+    .stand-title {
+      width: 50%;
+      font-size: 24px;
+    }
+    .avatar {
+      border-radius: $circle;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      box-shadow: $circularShadow;
+      img {
+        border: 3px solid $greenYellow;
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: $circle;
+      }
+    }
+    .message-stand {
+      .message-button {
+        border-radius: $circle;
+        width: $circleButton;
+        height: $circleButton;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        background: $brightGreen;
+        box-shadow: $circularShadow;
+      }
+    }
+  }
+  .crop-container {
+    margin-bottom: 100px;
+    .crop {
+      margin: 15px auto;
+      padding: 15px;
+      background: white;
+      border-radius: 5px;
+      box-shadow: $circularShadow;
+      .image-container {
+        height: 250px;
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        img {
+          border-radius: 5px;
+          max-height: 100%;
+          max-width: 100%;
+        }
+      }
+      .crop-title {
+        font-size: 18px;
+      }
+      .details-container {
+        font-size: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+      .delete-button {
+        padding: 0;
+        margin: 0;
+      }
+      #delete-modal {
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        position: fixed;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+        padding: 50px;
+        #delete-modal-content {
+          background: white;
+          margin: 50% auto;
+          border-radius: 5px;
+          padding: 15px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          div {
+            font-size: 22px;
+          }
+          .button-container {
+            display: flex;
+            width: 100%;
+            justify-content: space-around;
+            margin: 15px auto;
+            button {
+              border: 1px solid $brightGreen;
+              background: transparent;
+              padding: 10px;
+              border-radius: 5px;
+              font-size: 14px;
+              color: black;
+              box-shadow: $circularShadow;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.no-stand-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .create-stand {
+    margin-top: 50px;
+    font-size: 28px;
+  }
+  .message {
+    position: fixed;
+    bottom: 500px;
+    left: 37.5%;
+  }
+  .build-container {
+    .build-button {
+      position: fixed;
+      bottom: 400px;
+      left: 40%;
+      border-radius: $circle;
+      width: 80px;
+      height: 80px;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      background: $brightGreen;
+      box-shadow: $circularShadow;
+    }
+  }
+  .create-stand-container {
+    margin-top: 15px;
+    width: 100%;
+    form {
+      background: white;
+      padding: 20px;
+      height: 40%;
+      width: 100%;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      label {
+        font-size: 18px;
+      }
+      input {
+        margin: 15px auto;
+        border: 1px solid gray;
+        border-radius: 5px;
+        width: 80%;
+        padding: 5px;
+        font-size: 14px;
+      }
+      .button-container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        .submit-button {
+          border-radius: $circle;
+          width: $circleButton;
+          height: $circleButton;
+          padding: 10px;
+          display: flex;
+          justify-content: center;
+          background: $brightGreen;
+          box-shadow: $circularShadow;
+        }
+        .close-button {
+          border-radius: $circle;
+          width: $circleButton;
+          height: $circleButton;
+          padding: 10px;
+          display: flex;
+          justify-content: center;
+          background: $brightGreen;
+          box-shadow: $circularShadow;
+        }
+      }
+    }
+  }
+}
+
+.empty-stand-container {
+  padding: 15px;
+  .secondary-header {
+    width: 100%;
+    margin: 30% auto;
+    background: white;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    div {
+      font-size: 20px;
+    }
+  }
+}
+
+#modal-container {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  padding: 5px;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  #modal-content {
+    margin: 20% auto;
+    width: 100%;
+    background: white;
+    border-radius: 5px;
+    .garden-crops-container {
+      .content-container {
+        .edit-form-container {
+          background: whitesmoke;
+          border-radius: 5px;
+          padding: 10px;
+          width: 100%;
+          form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .choice-title {
+              font-size: 18px;
+            }
+            .check-true {
+              color: $darkestGreen;
+            }
+            .check-false {
+              color: $alertRed;
+            }
+            .keep-garden {
+              padding: 5px;
+              color: black;
+              width: 100%;
+              font-size: 14px;
+              background: white;
+            }
+            label {
+              font-size: 18px;
+              margin: 5px auto;
+            }
+            input {
+              width: 80%;
+              border: 1px solid gray;
+              border-radius: 5px;
+              padding: 5px;
+              font-size: 14px;
+            }
+            textarea {
+              height: 150px;
+              width: 80%;
+              padding: 5px;
+              font-size: 14px;
+              border-radius: 5px;
+              resize: none;
+              overflow: scroll;
+            }
+            .img-selection {
+              margin: 5px auto;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              .garden-photos {
+                display: flex;
+                flex-wrap: wrap;
+                height: 250px;
+                justify-content: center;
+                .img-container {
+                  padding: 3px;
+                  height: 100px;
+                  width: 100px;
+                  img {
+                    max-height: 100%;
+                    max-width: 100%;
+                  }
+                }
+              }
+              input {
+                border: 0;
+              }
+            }
+            .buttons {
+              width: 80%;
+              display: flex;
+              justify-content: space-around;
+              padding: 10px;
+            }
+          }
+        }
+        .seperating-line {
+          height: 2px;
+          width: 100%;
+          background: black;
+          margin: 5px auto;
+        }
+        .secondary-header {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          font-size: 24px;
+          height: 40px;
+        }
+        .crop-container {
+          background: whitesmoke;
+          border-radius: 5px;
+          margin: 5px auto;
+          padding: 20px;
+          height: 190px;
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+          .img-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 150px;
+            width: 150px;
+            img {
+              max-height: 100%;
+              max-width: 100%;
+              border-radius: 5px;
+            }
+          }
+          .description-container {
+            padding: 10px;
+            .plant-name {
+              font-size: 18px;
+            }
+            .description {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+    .done-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 5px;
+      #done-button {
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        background: $alertRed;
+        box-shadow: $circularShadow;
+      }
+    }
+  }
+}
+
+#message-modal-container {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  height: 120%;
+  width: 100%;
+  padding: 15px;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  #message-modal-content {
+    margin: 60% auto;
+    width: 100%;
+    height: 250px;
+    background: whitesmoke;
+    border-radius: 5px;
+    box-shadow: $circularShadow;
+    .enter-message-container {
+      padding: 10px;
+      height: 100%;
+      form {
+        background: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        padding: 15px;
+        border-radius: 5px;
+        .secondary-header {
+          width: 100%;
+          text-align: center;
+          margin: 5px auto;
+          div {
+            font-size: 20px;
+          }
+        }
+        textarea {
+          height: 100%;
+          width: 100%;
+          border: 1px solid black;
+          border-radius: 5px;
+          padding: 5px;
+          font-size: 14px;
+          resize: none;
+          overflow: scroll;
+        }
+        .msg-button-options {
+          button {
+            border-radius: 5px;
+            padding: 10px;
+            width: 70px;
+            margin: 10px;
+            font-size: 14px;
+            background: $brightGreen;
+            color: white;
+            box-shadow: $circularShadow;
+          }
+          button:nth-child(2) {
+            background: $alertRed;
+          }
+        }
+      }
+    }
+  }
+}
+
+#add-modal-container {
+  position:fixed;
+  z-index: 1;
+  left:0;
+  top:0;
+  height: 120%;
+  width:100%;
+  padding: 5px;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+  #add-modal-content {
+    margin: 10% auto;
+    width: 100%;
+    background: white;
+    border-radius: 5px;
+    .form-container {
+      padding: 10px;
+      background: whitesmoke;
+      border-radius: 5px;
+      form {
+        background: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        border-radius: 5px;
+        .secondary-header {
+          text-align: center;
+          font-size: 28px;
+        }
+        .plant-container {
+          display: flex;
+          width: 100%;
+          justify-content: center;
+          margin-top: 15px;
+          select {
+            width: 70%;
+            background: whitesmoke;
+            padding: 5px;
+            font-size: 14px;
+          }
+        }
+        label {
+          margin: 15px auto;
+        }
+        input {
+          border: 1px solid gray;
+          border-radius: 5px;
+          width: 80%;
+          align-self: center;
+          padding: 5px;
+          font-size: 14px;
+        }
+        textarea {
+          height: 150px;
+          width: 80%;
+          padding: 5px;
+          font-size: 14px;
+          border-radius: 5px;
+          resize: none;
+          overflow: scroll;
+        }
+        .image-upload {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          input {
+            padding: 0;
+            border: 0;
+          }
+        }
+        .photo-list {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          .photo-name {
+            font-size: 12px;
+          }
+        }
+        .submit-button-container {
+          width: 100%;
+          display: flex;
+          justify-content: space-around;
+          margin: 10px auto;
+          .add-button, .cancel-button{
+            border-radius: $circle;
+            width: $circleButton;
+            height: $circleButton;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            background: $brightGreen;
+            box-shadow: $circularShadow;
+          }
+          .cancel-button {
+            background: $alertRed;
+          }
+        }
+      }
+    }
+  }
+}
+
+.no-container {
+  display: flex;
+  justify-content: center;
+  margin: 50% auto;
+  background: white;
+  border-radius: 5px;
+  height: 120px;
+  width: 90%;
+  padding: 20px;
+  .no-stand-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    div {
+      color: red;
+    }
+  }
+}
+
+.not-logged-in {
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    .unauth-container {
+      background: white;
+      height: 80%;
+      width: 100%;
+      border-radius: 5px;
+      padding: 15px;
+      .secondary-header {
+        font-size: 28px;
+        text-align: center;
+        margin-top: 15px;
+        div {
+          span {
+            text-decoration: underline;
+          }
+        }
+      }
+      .feature-description {
+        margin-top: 15px;
+        text-align: center;
+        div {
+          font-size: 18px;
+          margin-top: 100px;
+        }
+        ul {
+          width: 100%;
+          padding: 0;
+          li {
+            list-style-type: none;
+            padding: 5px;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+}
+
+.auth-buttons {
+  display: flex;
+  position: fixed;
+  bottom: $circleButtonBot;
+  width: 100%;
+  justify-content: space-between;
+  .garden-button, .post-stand-button {
+    border-radius: $circle;
+    width: $circleButton;
+    height: $circleButton;
+    padding: 10px;
+    margin: auto 40px;
+    display: flex;
+    justify-content: center;
+    background: $brightGreen;
+    box-shadow: $circularShadow;
+  }
+}
+.loading-modal {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.4);
+  padding: 50px;
+  .loading-spinner {
+    height: 150px;
+    width: 200px;
+    background: white;
+    box-shadow: $circularShadow;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .message {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+  }
+}

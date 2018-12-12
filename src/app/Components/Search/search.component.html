@@ -1,0 +1,15 @@
+<div id="search-sidebar-container">
+  <div id="search-sidebar">
+    <form id="search-form" enctype="application/x-www-form-urlencoded">
+      <label for="search-category">Looking for something?</label>
+      <select name="search-category" [(ngModel)]="cropSearchData.category">
+        <option *ngFor="let category of categories" value="{{category}}">{{category}}</option>
+      </select>
+      <span>{{ getSearchErrors() }}</span>
+      <input placeholder="Search for..." type="text" name="description" [(ngModel)]="cropSearchData.searchInput"
+        (keyup)="validateSearch()">
+      <button type="button" class="search-button" (click)="searchCrop()">Search</button>
+      <span>{{ getResultErrors() }}</span>
+    </form>
+  </div>
+</div>

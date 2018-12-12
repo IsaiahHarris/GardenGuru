@@ -1,0 +1,46 @@
+<div id="search-results-container">
+  <div class="search-bar">
+    <form>
+      <select name="search-category" [(ngModel)]="searchData.category">
+        <option *ngFor="let category of categories" value="{{category}}">{{category}}</option>
+      </select>
+      <span>{{ getSearchErrors() }}</span>
+      <input placeholder="Search for..." type="text" name="searchInput" [(ngModel)]="searchData.searchInput" (keyup)="validateSearch()">
+      <span>{{ getResultErrors() }}</span>
+      <button type="button" class="search-button" (click)="searchCrop()">Search</button>
+    </form>
+  </div>
+  <div id="search-results">
+    <div class="secondary-header">
+      <div>Your Search Results</div>
+    </div>
+    <div class="items-found" *ngIf="searchResults">{{getResultLength()}}</div>
+    <div class="search-result-container">
+      <div class="result" *ngFor="let result of searchResults">
+        <div class="search-img-container" routerLink="/garden/crops/{{result.id}}" *ngIf="gardenSearch">
+          <img src="{{result.displayPhoto}}">
+        </div>
+        <div class="search-img-container" routerLink="/crops/{{result.id}}" *ngIf="standSearch">
+          <img src="{{result.displayPhoto}}">
+        </div>
+        <div class="search-img-container" routerLink="/user/{{result.owner_id}}/stand" *ngIf="marketSearch && result.photo">
+          <img src="{{result.displayPhoto}}">
+        </div>
+        <div class="info-container">
+          <div *ngIf="marketSearch || standSearch">{{result.description}}</div>
+          <div *ngIf="marketSearch || standSearch">{{result.price}}</div>
+          <div *ngIf="marketSearch">{{result.details}}</div>
+          <div *ngIf="standSearch" class="to-stand" routerLink="/user/{{result.owner_id}}/stand">Go To Stand</div>
+          <div *ngIf="gardenSearch">{{result.garden_description}}</div>
+          <div *ngIf="gardenSearch">Planted On: {{result.planted}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loading-modal" *ngIf="showLoading">
+  <div class="loading-spinner">
+    <div class="message">Searching</div>
+    <mat-spinner color="warn" diameter="60"></mat-spinner>
+  </div>
+</div>

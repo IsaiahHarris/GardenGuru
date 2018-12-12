@@ -1,0 +1,141 @@
+<div class="not-logged-in" *ngIf="!isLoggedIn">
+  <div class="unauth-container">
+    <div class="secondary-header">
+      <div>
+        <span routerLink="/register">Sign Up</span>
+        or
+        <span routerLink="/login">Log In</span>
+        to access your Profile
+      </div>
+      <div class="feature-description">
+        <div>With an account you'll be able to:</div>
+        <ul>
+          <li>View other Profiles</li>
+          <li>Manage your own Profile</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="content-container" *ngIf="!showingSettings && profile && isLoggedIn">
+  <div class="avatar">
+    <div class="avatar-container">
+      <img src="{{profile.avatar_link}}">
+    </div>
+  </div>
+  <div class="secondary-header">
+    <div *ngIf="profile">{{profile.username}}</div>
+  </div>
+  <div class="profile-body">
+    <div class="names">
+      <div>{{profile.first_name}} {{profile.last_name}}</div>
+      <div routerLink="/user/{{profile.id}}/stand">{{profile.stand_name}}</div>
+    </div>
+    <div>{{profile.city}}, {{profile.state}}</div>
+    <div class="bio">{{profile.bio}}</div>
+  </div>
+  <div class="user-options" *ngIf="correctUser && isLoggedIn">
+    <button class="settings-button" (click)="showSettings()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-cog">
+        <path d='M20 8.163A2.106 2.106 0 0 0 18.926 10c0 .789.433 1.476 1.074 1.837l-.717 2.406a2.105 2.105 0 0 0-2.218 3.058l-2.062 1.602A2.104 2.104 0 0 0 11.633 20l-3.29-.008a2.104 2.104 0 0 0-3.362-1.094l-2.06-1.615A2.105 2.105 0 0 0 .715 14.24L0 11.825A2.106 2.106 0 0 0 1.051 10C1.051 9.22.63 8.54 0 8.175L.715 5.76a2.105 2.105 0 0 0 2.207-3.043L4.98 1.102A2.104 2.104 0 0 0 8.342.008L11.634 0a2.104 2.104 0 0 0 3.37 1.097l2.06 1.603a2.105 2.105 0 0 0 2.218 3.058L20 8.162zM14.823 3.68c0-.063.002-.125.005-.188l-.08-.062a4.103 4.103 0 0 1-4.308-1.428l-.904.002a4.1 4.1 0 0 1-4.29 1.43l-.095.076A4.108 4.108 0 0 1 2.279 7.6a4.1 4.1 0 0 1 .772 2.399c0 .882-.28 1.715-.772 2.4a4.108 4.108 0 0 1 2.872 4.09l.096.075a4.104 4.104 0 0 1 4.289 1.43l.904.002a4.1 4.1 0 0 1 4.307-1.428l.08-.062A4.108 4.108 0 0 1 17.7 12.4a4.102 4.102 0 0 1-.773-2.4c0-.882.281-1.716.773-2.4a4.108 4.108 0 0 1-2.876-3.919zM10 14a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'
+        /></svg>
+    </button>
+  </div>
+  <!-- settings form -->
+</div>
+<div class="content-container" *ngIf="showingSettings">
+  <div class="form-container">
+    <div class="setting-options" *ngIf="!changingPass && !changingLocation && !changingStandName && !changingProfilePic">
+      <div>User Settings</div>
+      <div class="options" (click)="handleSettings($event)">Change Password</div>
+      <div class="options" (click)="handleSettings($event)">Change Location</div>
+      <div *ngIf="!userStandError" class="options" (click)="handleSettings($event)">Change Stand Name</div>
+      <div class="options" (click)="handleSettings($event)">Change Profile Picture</div>
+    </div>
+    <form enctype="multipart/form-data" *ngIf="changingPass">
+      <div class="secondary-header">
+        <div>Change Your Password</div>
+      </div>
+      <label for="oldPass">Old Password</label>
+      <input class="change-password-input" type="password" name="oldPass" [(ngModel)]="passwordFormData.oldPass">
+      <span class="profile-error" *ngIf="oldPasswordError" style="color:red">This field must be at least five characters
+        long.
+      </span>
+      <label for="newPass">New Password</label>
+      <input class="change-password-input" type="password" name="newPass" [(ngModel)]="passwordFormData.newPass">
+      <span class="profile-error" *ngIf="newPasswordError" style="color:red">This field must be at least five characters
+        long.
+      </span>
+      <label for="valPass">Confirm New Password</label>
+      <input class="change-password-input" type="password" name="valPass" [(ngModel)]="passwordFormData.valPass">
+      <span class="profile-error" *ngIf="confirmNewPasswordError" style="color:red">This field must be at least five characters
+        long.
+      </span>
+      <span class="profile-error" *ngIf="matchingPasswordError" style="color:red">Please ensure that the password in both
+        fields are the same.</span>
+      <span class="profile-error" *ngIf="sameOldNewPasswordError" style="color:red">Your old and new password are the same.
+        Please change your new password.</span>
+    </form>
+
+    <form enctype="multipart/form-data" *ngIf="changingLocation">
+      <div class="secondary-header">
+        <div>Change Your Location</div>
+      </div>
+      <div class="location-container">
+        <select name="city" [(ngModel)]="locationFormData.city">
+          <option value="">Select City</option>
+          <option *ngFor="let city of cities" value="{{city}}">{{city}}</option>
+        </select>
+        <select name="state" [(ngModel)]="locationFormData.state">
+          <option value="">Select State</option>
+          <option *ngFor="let state of states" value="{{state}}">{{state}}</option>
+        </select>
+        <span class="profile-error" *ngIf="locationError" style="color:red">You must select both a city and a state.</span>
+      </div>
+    </form>
+
+    <form enctype="multipart/form-data" *ngIf="changingStandName">
+      <div class="secondary-header">
+        <div>Change Your Stand Name</div>
+      </div>
+      <label for="stand_name">Stand Name</label>
+      <input type="text" name="stand_name" [(ngModel)]="standFormData.stand_name">
+      <span class="profile-error" *ngIf="standError" style="color:red">This field must be at least five characters long.</span>
+    </form>
+
+    <form enctype="multipart/form-data" *ngIf="changingProfilePic">
+      <div class="secondary-header">
+        <div>Change Profile Picture</div>
+      </div>
+      <label for="avatar">Change Profile</label>
+      <input type="file" (change)="saveNewPhoto($event)">
+      <label for="bio">Change Bio</label>
+      <input type="text" name="bio" [(ngModel)]="profileFormData.bio">
+    </form>
+    <div class="button-container" *ngIf="changingLocation || changingPass || changingProfilePic || changingStandName">
+      <button class="submit-button" (click)="submitChanges()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -7 24 24" width="24" height="24" preserveAspectRatio="xMinYMin" class="jam jam-check">
+          <path d='M5.486 9.73a.997.997 0 0 1-.707-.292L.537 5.195A1 1 0 1 1 1.95 3.78l3.535 3.535L11.85.952a1 1 0 0 1 1.415 1.414L6.193 9.438a.997.997 0 0 1-.707.292z'
+          /></svg>
+      </button>
+      <button class="cancel-button" (click)="cancel()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 24 24" width="24" height="24" preserveAspectRatio="xMinYMin" class="jam jam-close">
+          <path d='M7.314 5.9l3.535-3.536A1 1 0 1 0 9.435.95L5.899 4.485 2.364.95A1 1 0 1 0 .95 2.364l3.535 3.535L.95 9.435a1 1 0 1 0 1.414 1.414l3.535-3.535 3.536 3.535a1 1 0 1 0 1.414-1.414L7.314 5.899z'
+          /></svg>
+      </button>
+    </div>
+    <div class="settings-button-container" *ngIf="!changingLocation && !changingPass && !changingStandName && !changingProfilePic">
+      <button class="hide-settings-button" (click)="showSettings()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 24 24" width="24" height="24" preserveAspectRatio="xMinYMin" class="jam jam-arrow-left">
+          <path d='M3.414 7.657l3.95 3.95A1 1 0 0 1 5.95 13.02L.293 7.364a.997.997 0 0 1 0-1.414L5.95.293a1 1 0 1 1 1.414 1.414l-3.95 3.95H13a1 1 0 0 1 0 2H3.414z'
+          /></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="loading-modal" *ngIf="showLoading">
+  <div class="loading-spinner">
+    <div class="message">Updating Profile</div>
+    <mat-spinner color="warn" diameter="60"></mat-spinner>
+  </div>
+</div>

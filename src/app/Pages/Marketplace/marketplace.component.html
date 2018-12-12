@@ -1,0 +1,53 @@
+<div class="marketplace-container" *ngIf="loggedIn">
+    <div class="stands-section">
+        <div class="marketplace-header">
+            <div class="marketplace-title">Stands in {{user.city}}</div>
+        </div>
+        <div class="stands-container">
+            <div class="stand" *ngFor="let stand of stands" routerLink="/user/{{stand.id}}/stand">
+                    <div class="stand-name"> {{stand.stand_name}}</div>
+                    <div class="avatar" *ngIf="stand.avatar_link">
+                        <img src="{{stand.avatar_link}}">
+                    </div>
+                    <div class="no-avatar" *ngIf="!stand.avatar_link"></div>
+            </div>
+        </div>
+    </div>
+    <div class="crops-section">
+        <div class="crops-title">Recently added items in {{user.city}}</div>
+        <div class="crops-container">
+            <div class="crops" *ngFor="let crop of crops" routerLink="/crops/{{crop.id}}">
+                <div class="description">{{crop.description}}</div>
+                <div class="image">
+                    <img src="{{crop.displayPhoto}}" Í>
+                </div>
+                <div class="price">{{crop.price}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-container-unauth" *ngIf="!loggedIn">
+    <div class="message-container">
+        <div class="message">Welcome To The Marketplace</div>
+        <div class="message" routerLink="/login">
+            Login to view stands/crops locally
+        </div>
+    </div>
+    <div class="crops" *ngFor="let crop of recentlyAddedCrops">
+        <div class="description">{{crop.description}}</div>
+        <div class="image-container" routerLink="/crops/{{crop.id}}">
+            <img src="{{crop.displayPic}}">
+        </div>
+        <div class="content-container">
+            <div class="price">Price: {{crop.price}}</div>
+            <div class="details">{{crop.details}}</div>
+        </div>
+    </div>
+</div>
+<div class="loading-modal" *ngIf="showLoading">
+    <div class="loading-spinner">
+        <div class="message">Loading Marketplace</div>
+        <mat-spinner color="warn" diameter="60"></mat-spinner>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+@import '~@angular/material/prebuilt-themes/purple-green.css';
+@import '../../../variables';
+
+.conversation-container{
+  width:100%;
+  .message-header {
+    padding-top:10%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-size: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: $darkestGreen;
+    color: white;
+    position: fixed;
+    .back-buttons {
+      display: flex;
+      justify-self: flex-start;
+      width: 10%;
+    }
+    .convo-partner {
+      width: 90%;
+      padding-left: 37%;
+      font-size:21px;
+    }
+  }
+  .message-container{
+    width:100%;
+    top:17%;
+    padding-top:10px;
+    position:fixed;
+    height: 70vh;
+    overflow-y:scroll;
+  }
+  .messages{
+    width:100%;
+    margin: 5px auto;
+    display: flex;
+    flex-direction: row;
+    .not-my-message {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      padding-right: 30%;
+      padding-left:13px;
+      .message-content {
+        background: $darkestGreen;
+        color: white;
+        border-radius: 20px 20px 20px 0px;
+        padding: 10px;
+        box-shadow: $circularShadow;
+        max-width: 60%;
+        overflow-wrap: break-word;
+      }
+    }
+    .my-message {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      padding-left: 30%;
+      padding-right:13px;
+      .message-content {
+        background: $sentMessageColor;
+        color: white;
+        border-radius: 20px 20px 0px 20px;
+        padding: 10px;
+        box-shadow: $circularShadow;
+        max-width: 60%;
+        overflow-wrap: break-word;
+      }
+    }
+  }
+}
+
+.enter-message-container{
+  position: fixed;
+  bottom: 57px;
+  width:100%;
+  display: flex;
+  padding: 10px;
+  
+  form{
+    width: 100%;
+    display: flex;
+    input {
+      width: 90%;
+      padding: 5px;
+      font-size: 12px;
+      border: 1px solid grey;
+    }
+    .send-button{
+      height: 100%;
+      max-height: 100%;
+      fill: $sentMessageColor;
+    }
+  }
+}

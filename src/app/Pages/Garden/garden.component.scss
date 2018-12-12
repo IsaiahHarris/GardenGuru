@@ -1,0 +1,172 @@
+@import '~@angular/material/prebuilt-themes/purple-green.css';
+@import '../../../variables';
+
+.content-container {
+  padding: 20px;
+  height: 120%;
+  width: 100%;
+  font-family: $subFont;
+  .unauth-container {
+    background: white;
+    height: 80%;
+    width: 100%;
+    border-radius: 5px;
+    padding: 15px;
+    .secondary-header {
+      text-align: center;
+      font-size: 28px;
+      margin-top: 15px;
+      div {
+        span {
+          text-decoration: underline;
+        }
+      }
+    }
+    .feature-description {
+      margin-top: 15px;
+      text-align: center;
+      div {
+        font-size: 18px;
+        margin-top: 100px;
+      }
+      ul {
+        width: 100%;
+        padding: 0;
+        li {
+          list-style-type: none;
+          padding: 5px;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .secondary-header {
+    text-align: center;
+    font-size: 28px;
+  }
+  .garden-container {
+    text-align: center;
+    margin: 10px;
+    .header {
+      font-size: 18px;
+    }
+    .garden {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 10px 20px;
+      background: whitesmoke;
+      border-radius: 5px;
+      height: 250px;
+      overflow: scroll;
+      box-shadow: $circularShadow;
+      .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        width: 125px;
+        background: white;
+        border-radius: 5px;
+        box-shadow: $circularShadow;
+        height: 110px;
+        margin: 5px;
+        .img-container {
+          height: 30px;
+          width: 30px;
+          img {
+            max-height: 100%;
+            max-width: 100%;
+          }
+        }
+        .description {
+          font-size: 12px;
+        }
+      }
+    }
+    .watering {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      padding: 10px 20px;
+      flex-wrap: wrap;
+      .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 90px;
+          .jam.jam-water-drop-f{
+            height: 30px;
+            width: 30px;
+            fill: gray;
+            path {
+              fill: gray;
+            }
+          }
+          .description {
+            font-size: 12px;
+          }
+      }
+    }
+  }
+  .harvest {
+    width: 100%;
+    display: flex;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+    .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 90px;
+      .img-container {
+        height: 30px;
+        width: 30px;
+        img {
+          max-height: 100%;
+          max-width: 100%;
+        }
+      }
+      .description {
+        font-size: 12px;
+      }
+    }
+  }
+  .button-container {
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    bottom: 120px;
+    width: 89%;
+    justify-content: center;
+    .water-button {
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      background: cornflowerblue;
+      box-shadow: $circularShadow;
+    }
+  }
+  .add-button {
+    position: fixed;
+    bottom: $circleButtonBot;
+    right: 30px;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    background: $brightGreen;
+    box-shadow: $circularShadow;
+  }
+}

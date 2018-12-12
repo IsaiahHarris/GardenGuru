@@ -1,0 +1,273 @@
+<!-- Create Message Body -->
+<div id="message-modal-container" *ngIf="openMessage && !correctUser && isLoggedIn">
+  <div id="message-modal-content">
+    <div class="enter-message-container">
+      <form enctype="application/x-www-form-urlencoded">
+        <div class="secondary-header">
+          <div>Message this Stand</div>
+        </div>
+        <textarea name="content" [(ngModel)]="message.content"></textarea>
+        <div class="msg-button-options">
+          <button (click)="sendMessage()">Send</button>
+          <button (click)="startConversation()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="content-container" *ngIf="!showingGarden && standOwner">
+  <div class="secondary-header">
+    <div class="avatar" routerLink="/user/{{standOwner.id}}">
+      <img src="{{standOwner.avatar_link}}">
+    </div>
+    <div class="stand-title">{{standOwner.stand_name}}</div>
+    <div class="message-stand" *ngIf="user.id != urlId">
+      <button class="message-button" (click)="startConversation()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2.5 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-message-writing">
+          <path d='M3 0h14a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-6.958l-6.444 4.808A1 1 0 0 1 2 18.006V14a2 2 0 0 1-2-2V3a3 3 0 0 1 3-3zm6.378 12H17a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1 1 1 0 0 1 1 1v3.013L9.378 12zM13 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM7 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4z'
+          /></svg>
+      </button>
+    </div>
+  </div>
+  <div class="crop-container">
+    <div *ngFor="let crop of crops" class="crop">
+      <div routerLink="/crops/{{crop.id}}" class="image-container">
+        <img src="{{crop.displayPhoto}}">
+      </div>
+      <div class="crop-title">{{crop.description}} ({{crop.inventory}})
+      </div>
+      <div class="details-container">
+        <div class="price">Price: {{crop.price}}</div>
+        <div class="details">Details: {{crop.details}}</div>
+      </div>
+      <button class="delete-button" (click)="toggleDeleteConfirmation(crop.id)" *ngIf="correctUser">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-close-rectangle">
+          <path d='M4 0h12a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4zm0 2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H4zm7.414 8l2.829 2.828a1 1 0 0 1-1.415 1.415L10 11.414l-2.828 2.829a1 1 0 1 1-1.415-1.415L8.586 10 5.757 7.172a1 1 0 0 1 1.415-1.415L10 8.586l2.828-2.829a1 1 0 0 1 1.415 1.415L11.414 10z'
+          /></svg>
+      </button>
+      <!-- Delete Modal -->
+      <div id="delete-modal" *ngIf="confirmDelete">
+        <div id="delete-modal-content">
+          <div>Confirm Delete</div>
+          <div class="button-container">
+            <button (click)="deleteCrop()">Delete</button>
+            <button (click)="toggleDeleteConfirmation()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- if user has no stand and is not correct user -->
+<div class="no-container" *ngIf="!hasStand && !correctUser && isLoggedIn">
+  <div class="no-stand-message">
+    <div>This user does not have a Stand</div>
+  </div>
+</div>
+<!-- if user has stand but no items -->
+<div class="empty-stand-container" *ngIf="hasStand && emptyStand">
+  <div class="stand-name">
+    <div>{{standOwner.stand_name}}</div>
+  </div>
+  <div class="secondary-header">
+    <div>There are no items in this Stand</div>
+  </div>
+</div>
+<div class="auth-buttons" *ngIf="isLoggedIn && correctUser && hasStand">
+  <button class="garden-button" (click)="showGarden()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -1.5 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-flower">
+      <path d='M7.094 11.59a5.91 5.91 0 0 1 .346-.466 3.484 3.484 0 0 1-.406-1.637A3.501 3.501 0 0 1 7.01 4.54a3.5 3.5 0 0 1 3.473-3.472A3.49 3.49 0 0 1 13 0c.943 0 1.799.373 2.428.98a3.504 3.504 0 0 1 3.521 3.5A3.572 3.572 0 0 1 20 7c0 .95-.379 1.813-.994 2.443V9.5A3.5 3.5 0 0 1 15.45 13c-.631.618-1.496 1-2.45 1-.96 0-1.83-.387-2.463-1.013a3.49 3.49 0 0 1-1.68-.428 3.775 3.775 0 0 0 .127 4.623l1.79 2.184a1 1 0 1 1-1.547 1.268l-1.79-2.184a5.765 5.765 0 0 1-.964-1.692 3.213 3.213 0 0 1-3.404-.177c-.968-.679-1.795-2.861-2.48-6.547 3.142.177 5.197.605 6.166 1.283.12.085.234.176.34.274zm4.265-.604l.586.58c.28.277.653.434 1.055.434.4 0 .77-.154 1.05-.429l.596-.584.835.013c.854 0 1.525-.671 1.525-1.5l-.013-.857.581-.596C17.847 7.767 18 7.398 18 7c0-.41-.163-.79-.45-1.072l-.606-.593.005-.847c0-.837-.671-1.509-1.5-1.509l-.823.005-.585-.564A1.488 1.488 0 0 0 13 2a1.49 1.49 0 0 0-1.079.458l-.583.603-.84.007A1.5 1.5 0 0 0 9.01 4.556l-.006.812-.571.578C8.156 6.226 8 6.598 8 7c0 .407.16.783.443 1.065l.592.587v.834a1.5 1.5 0 0 0 1.5 1.5h.824zM13 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm-8.783 5.942a1.213 1.213 0 0 0 1.39-1.986c-.358-.251-1.198-.491-2.47-.674.42 1.566.826 2.483 1.08 2.66z'
+      /></svg>
+  </button>
+  <button class="post-stand-button" (click)="showPostForm()">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-4.5 -4.5 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-plus">
+      <path d='M8.9 6.9v-5a1 1 0 1 0-2 0v5h-5a1 1 0 1 0 0 2h5v5a1 1 0 1 0 2 0v-5h5a1 1 0 1 0 0-2h-5z' /></svg>
+  </button>
+</div>
+
+<!-- MODAL -->
+<div *ngIf="showingGarden && isLoggedIn" id='modal-container'>
+  <div id="modal-content">
+    <div class="garden-crops-container">
+      <div class="content-container" id="content-container">
+        <!-- Edit form which toggles on and off -->
+        <div class="edit-form-container" *ngIf="isEdit">
+          <form class="edit-form">
+            <div class="choice-title">Keep plant in garden?</div>
+            <div class="check-true" *ngIf="check" (click)="toggleCheck()">Yes</div>
+            <div class="check-false" *ngIf="!check" (click)="toggleCheck()">No</div>
+            <label for="stand_name">Description</label>
+            <input maxlength="25" type="text" name="description" [(ngModel)]="moveFormData.description">
+            <span class="stand-error" *ngIf="firstCropDescription" style="color:red">This field is required.</span>
+            <label for="price">Price</label>
+            <input maxlength="25" type="text" name="price" [(ngModel)]="moveFormData.price">
+            <label for="details">Details</label>
+            <textarea name="details" [(ngModel)]="moveFormData.details"></textarea>
+            <span class="stand-error" *ngIf="firstCropDetails" style="color:red">This field is required.</span>
+            <label for="inventory">Inventory</label>
+            <input type="number" name="inventory" [(ngModel)]="moveFormData.inventory">
+            <span class="stand-error" *ngIf="firstCropInventory" style="color:red">This field is required.</span>
+            <div class="img-selection">
+              <div>Select Photos from Garden</div>
+              <div class="garden-photos">
+                <div class="img-container" *ngFor="let photo of cropPhotos">
+                  <img src="{{photo.link}}" (click)="selectPhoto($event)">
+                </div>
+              </div>
+              <label for="photos">Upload Photos</label>
+              <input type="file" name="photo" accept=".jpg, .jpeg, .png" multiple (change)="updatePhotoList($event)">
+              <div class="photo-list" *ngFor="let photo of photosToStand">
+                <div class="photo-name">{{photo.name}}</div>
+              </div>
+            </div>
+            <div class="buttons">
+              <button (click)="moveToStand()" (click)="toggleEdit()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -7 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-check">
+                  <path d='M5.486 9.73a.997.997 0 0 1-.707-.292L.537 5.195A1 1 0 1 1 1.95 3.78l3.535 3.535L11.85.952a1 1 0 0 1 1.415 1.414L6.193 9.438a.997.997 0 0 1-.707.292z'
+                  /></svg>
+              </button>
+              <button (click)="turnEditToFalse()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-close">
+                  <path d='M7.314 5.9l3.535-3.536A1 1 0 1 0 9.435.95L5.899 4.485 2.364.95A1 1 0 1 0 .95 2.364l3.535 3.535L.95 9.435a1 1 0 1 0 1.414 1.414l3.535-3.535 3.536 3.535a1 1 0 1 0 1.414-1.414L7.314 5.899z'
+                  /></svg>
+              </button>
+            </div>
+          </form>
+          <!-- End of edit form -->
+        </div>
+        <div class="seperating-line" *ngIf="isEdit"></div>
+        <div class="secondary-header">
+          <div>Add Crops From Your Garden </div>
+        </div>
+        <div class="crop-container" (click)="toggleEdit(crop)" *ngFor='let crop of garden'>
+          <div class="img-container">
+            <img src="{{crop.mainPhoto}}">
+          </div>
+          <div class="description-container">
+            <div class="plant-name">{{crop.plant.name}}</div>
+            <div class="description">{{crop.garden_description}}</div>
+          </div>
+        </div>
+        <div class="done-container">
+          <button id="done-button" (click)="showGarden()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-close">
+              <path d='M7.314 5.9l3.535-3.536A1 1 0 1 0 9.435.95L5.899 4.485 2.364.95A1 1 0 1 0 .95 2.364l3.535 3.535L.95 9.435a1 1 0 1 0 1.414 1.414l3.535-3.535 3.536 3.535a1 1 0 1 0 1.414-1.414L7.314 5.899z'
+              /></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Post Modal -->
+<div id="add-modal-container" *ngIf="postingCrop && isLoggedIn">
+  <div id="add-modal-content">
+    <div class="form-container">
+      <form>
+        <div class="secondary-header">
+          <div>Add To Your Stand</div>
+        </div>
+        <div class="plant-container">
+          <select name="plants" [(ngModel)]="postFormData.plant">
+            <option value="0">Select Plant</option>
+            <option *ngFor="let name of plantNames" value="{{name}}">{{name}}</option>
+          </select>
+        </div>
+        <span class="add-to-stand-error" *ngIf="plantError" style="color:red">Please select a plant category.</span>
+        <label for="description">Description</label>
+        <input type="text" name="description" [(ngModel)]="postFormData.description">
+        <span class="add-to-stand-error" *ngIf="descriptionError" style="color:red">This field is required.</span>
+        <label for="price">Price</label>
+        <input type="text" name="price" [(ngModel)]="postFormData.price">
+        <label for="inventory">Inventory</label>
+        <input type="number" name="inventory" [(ngModel)]="postFormData.inventory">
+        <span class="add-to-stand-error" *ngIf="inventoryError" style="color:red">This field only allows numbers that are
+          higher than zero.</span>
+        <label for="details">Details</label>
+        <textarea name="details" [(ngModel)]="postFormData.details"></textarea>
+        <span class="add-to-stand-error" *ngIf="detailsError" style="color:red">This field is required.</span>
+        <div class="image-upload">
+          <label for="photos">Upload Photos</label>
+          <input type="file" name="photo" accept=".jpg, .jpeg, .png" (change)="updatePhotoList($event)">
+        </div>
+        <div class="photo-list" *ngFor="let photo of postFormData.photos">
+          <div class="photo-name">{{photo.name}}</div>
+        </div>
+        <div class="submit-button-container">
+          <button (click)="addToStand()" class="add-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -7 24 24" width="24" height="24" preserveAspectRatio="xMinYMin" class="jam jam-check">
+              <path d='M5.486 9.73a.997.997 0 0 1-.707-.292L.537 5.195A1 1 0 1 1 1.95 3.78l3.535 3.535L11.85.952a1 1 0 0 1 1.415 1.414L6.193 9.438a.997.997 0 0 1-.707.292z'
+              /></svg>
+          </button>
+          <button (click)="showPostForm()" class="cancel-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-close">
+              <path d='M7.314 5.9l3.535-3.536A1 1 0 1 0 9.435.95L5.899 4.485 2.364.95A1 1 0 1 0 .95 2.364l3.535 3.535L.95 9.435a1 1 0 1 0 1.414 1.414l3.535-3.535 3.536 3.535a1 1 0 1 0 1.414-1.414L7.314 5.899z'
+              /></svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- if user has no stand -->
+<div class="no-stand-container" *ngIf='correctUser && !hasStand && isLoggedIn'>
+  <div class="create-stand">You don't have a Stand!</div>
+  <div class="build-container" *ngIf="!buildStand">
+    <div class="message">Click to build!</div>
+    <button class="build-button" (click)="buildingStand()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -1 24 24" width="50"
+        height="50" preserveAspectRatio="xMinYMin" class="jam jam-tools">
+        <path d='M2 8.654l2.813 2.822 6.332-6.35-2.814-2.823-6.332 6.35zm4.441 8.128l2.11-2.117a.993.993 0 0 1 1.408 0 1 1 0 0 1 0 1.411l-2.11 2.117a1 1 0 0 1 0 1.411L6.44 21.015a.993.993 0 0 1-1.407 0l-1.407-1.41a1 1 0 0 1 0-1.412l1.407-1.411a.993.993 0 0 1 1.407 0zm9.146-6.35l6.331-6.35-1.407-1.412-6.331 6.35c-.777-.78-.912-1.907-.302-2.52L19.406.956c.61-.612 1.735-.477 2.512.303l1.407 1.41c.778.78.913 1.909.302 2.52l-5.528 5.545c-.61.612-1.735.477-2.512-.303zm-.924 3.866L9.738 9.36l-.704.706 4.925 4.939.704-.706zm1.407 1.412l-.704.705 1.759 1.764c.194.195.51.195.703 0a.5.5 0 0 0 0-.705L16.07 15.71zM2.06 5.77a1.5 1.5 0 0 1 .291-1.704l1.407-1.41a1.49 1.49 0 0 1 1.699-.293L6.924.892a1.986 1.986 0 0 1 2.814 0l2.814 2.823a2 2 0 0 1 0 2.822l-1.407 1.411 8.09 8.114a2.5 2.5 0 0 1 0 3.528 2.482 2.482 0 0 1-3.517 0l-8.09-8.114-1.408 1.411c-.777.78-2.037.78-2.814 0L.592 10.065a2 2 0 0 1 0-2.823l1.467-1.47z'
+        /></svg></button>
+  </div>
+  <div class="create-stand-container" *ngIf="buildStand && isLoggedIn">
+    <form class="edit-form">
+      <label for="stand_name">Stand Name:</label>
+      <input maxlength="25" type="text" name="stand_name" [(ngModel)]="standFormdata.stand_name">
+      <span class="stand-error" *ngIf="badStandName" style="color:red">Must be three characters minimum.</span>
+      <div class="button-container">
+        <button class="submit-button" (click)="editUser()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -7 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-check">
+            <path d='M5.486 9.73a.997.997 0 0 1-.707-.292L.537 5.195A1 1 0 1 1 1.95 3.78l3.535 3.535L11.85.952a1 1 0 0 1 1.415 1.414L6.193 9.438a.997.997 0 0 1-.707.292z'
+            /></svg>
+        </button>
+        <button class="close-button" (click)="buildingStand()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -6 24 24" width="28" height="28" preserveAspectRatio="xMinYMin" class="jam jam-close">
+            <path d='M7.314 5.9l3.535-3.536A1 1 0 1 0 9.435.95L5.899 4.485 2.364.95A1 1 0 1 0 .95 2.364l3.535 3.535L.95 9.435a1 1 0 1 0 1.414 1.414l3.535-3.535 3.536 3.535a1 1 0 1 0 1.414-1.414L7.314 5.899z'
+            /></svg>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="not-logged-in" *ngIf="!isLoggedIn">
+  <div class="unauth-container">
+    <div class="secondary-header">
+      <div>
+        <span routerLink="/register">Sign Up</span>
+        or
+        <span routerLink="/login">Log In</span>
+        to access your Stand
+      </div>
+    </div>
+    <div class="feature-description">
+      <div>With an account you'll be able to:</div>
+      <ul>
+        <li>Sell your crops in the Marketplace</li>
+        <li>Manage your crops being displayed in the Marketplace</li>
+        <li>Message other users to organize a trade/purchase</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="loading-modal" *ngIf="showLoading">
+  <div class="loading-spinner">
+    <div class="message" *ngIf="!showingGarden && !postingCrop">Loading Stand</div>
+    <div class="message" *ngIf="showingGarden">Adding from Garden</div>
+    <div class="message" *ngIf="postingCrop">Adding To Stand</div>
+    <mat-spinner color="warn" diameter="60"></mat-spinner>
+  </div>
+</div>

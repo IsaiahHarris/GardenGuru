@@ -1,0 +1,21 @@
+<div id="sidebar-container">
+  <div id="sidebar">
+    <ul>
+      <li (click)="toggleSideBar()" *ngIf="!isLoggedIn()" routerLink="login">
+        <a>Login</a>
+      </li>
+      <li (click)="toggleSideBar()" *ngIf="!isLoggedIn()" routerLink="register">
+        <a>Register</a>
+      </li>
+      <li (click)="toggleSideBar()" *ngIf="isLoggedIn()" routerLink="messages">
+        <a>Conversations</a>
+      </li>
+      <li (click)="toggleSideBar()" *ngIf="isLoggedIn()">
+        <button class="logout-button" routerLink="/marketplace" (click)="logout()">Logout</button>
+      </li>
+    </ul>
+  </div>
+  <div class="outside">
+
+  </div>
+</div>

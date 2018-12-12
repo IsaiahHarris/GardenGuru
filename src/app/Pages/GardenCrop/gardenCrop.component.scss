@@ -1,0 +1,359 @@
+@import '~@angular/material/prebuilt-themes/purple-green.css';
+@import '../../../variables';
+
+.content-container {
+  padding: 20px;
+  width: 100%;
+  height: 120%;
+  .crop-container {
+    background: white;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    box-shadow: $circularShadow;
+    .secondary-header {
+      margin-bottom: 20px;
+      div {
+        font-size: 28px;
+      }
+    }
+  }
+  .img-container {
+    height: 200px;
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    img {
+      max-height: 100%;
+      max-width: 100%;
+      border-radius: 5px;
+    }
+  }
+  .img-scroller {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 5px;
+    div {
+      padding: 5px;
+    }
+  }
+  .description {
+    font-size: 18px;
+    margin: 10px auto;
+  }
+  .date {
+    font-size: 18px;
+    margin: 10px;
+  }
+  .auth-buttons {
+    display: flex;
+    position: fixed;
+    bottom: $circleButtonBot;
+    width: 100%;
+    justify-content: space-around;
+    .edit-button {
+      border-radius: $circle;
+      width: $circleButton;
+      height: $circleButton;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      background: $brightGreen;
+      box-shadow: $circularShadow;
+    }
+    .stand-button {
+      border-radius: $circle;
+      width: $circleButton;
+      height: $circleButton;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      background: $brightGreen;
+      box-shadow: $circularShadow;
+    }
+    .delete-button {
+      border-radius: $circle;
+      width: $circleButton;
+      height: $circleButton;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      background: $alertRed;
+      box-shadow: $circularShadow;
+    }
+  }
+// EDIT GARDEN CROP STYLING
+.editing-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 120px;
+  label {
+    margin: 15px auto;
+  }
+  input {
+    border: 1px solid gray;
+    padding: 5px;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 14px;
+    margin: 5px;
+  }
+  select {
+    width: 90%;
+    background: whitesmoke;
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 14px;
+  }
+  .image-upload {
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
+    text-align: center;
+    input {
+      border: 0.6px outset black;
+    }
+  }
+}
+.submit-button {
+  position: fixed;
+  bottom: $circleButtonBot;
+  left: 60px;
+  border-radius: $circle;
+  width: $circleButton;
+  height: $circleButton;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  background: $brightGreen;
+  box-shadow: $circularShadow;
+}
+.cancel-button {
+  position: fixed;
+  bottom: $circleButtonBot;
+  right: 60px;
+  border-radius: $circle;
+  width: $circleButton;
+  height: $circleButton;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  background: $alertRed;
+  box-shadow: $circularShadow;
+}
+.remove-container {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 130px;
+  right: 65px;
+  svg {
+    height: 40px;
+    width: 40px;
+    fill: red;
+  }
+}
+}
+
+#modal-container{
+ position:fixed;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ z-index: 1;
+ left:0;
+ top:0;
+ height: 100%;
+ width:100%;
+ overflow: auto;
+ background-color: rgba(0,0,0,0.4)
+}
+#modal-content{
+  background: white;
+  border-radius: 5px;
+  padding: 20px;
+  height: 100%;
+  margin: 10% auto;
+  width:80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: $circularShadow;
+  form {
+    display: flex;
+    flex-direction: column;
+    // height: 100%;
+    align-items: center;
+    overflow: scroll;
+    .secondary-header {
+      margin-bottom: 20px;
+      div {
+        font-size: 22px;
+      }
+    }
+    .choice-title {
+      margin-bottom: 5px;
+    }
+    .options {
+      margin-bottom: 5px;
+    }
+    label {
+      margin: 5px auto;
+    }
+    input {
+      border: 1px solid gray;
+      padding: 5px;
+      width: 100%;
+      border-radius: 5px;
+      font-size: 14px;
+      margin: 5px;
+    }
+    textarea {
+      height: 150px;
+      width: 100%;
+      padding: 5px;
+      font-size: 14px;
+      border-radius: 5px;
+      resize: none;
+      overflow: scroll;
+    }
+    .img-selection {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+      .garden-photos {
+        display: flex;
+        flex-wrap: wrap;
+        height: 500px;
+        justify-content: center;
+        .img-container {
+          padding: 3px;
+          height: 80px;
+          width: 80px;
+          img {
+            max-height: 100%;
+            max-width: 100%;
+          }
+        }
+      }
+      input {
+        border: 0;
+      }
+    }
+    .modal-buttons {
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-around;
+      margin-bottom: 30px;
+      .submit-button {
+        border-radius: $circle;
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        background: $brightGreen;
+        box-shadow: $circularShadow;
+      }
+      .cancel-button {
+        border-radius: $circle;
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        background: $alertRed;
+        box-shadow: $circularShadow;
+      }
+    }
+  }
+}
+
+.check-true{
+  color:green;
+}
+.check-false{
+  color:red;
+}
+
+#delete-modal {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  position: fixed;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+  padding: 50px;
+  #delete-modal-content {
+    background: white;
+    margin: 50% auto;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: $circularShadow;
+    div {
+      font-size: 22px;
+    }
+    .button-container {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      margin: 15px auto;
+      button {
+        background: transparent;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 14px;
+        width: 70px;
+        color: white;
+        background: $brightGreen;
+        box-shadow: $circularShadow;
+      }
+      button:nth-child(2) {
+        background: $alertRed;
+      }
+    }
+  }
+}
+.loading-modal {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.4);
+  padding: 50px;
+  .loading-spinner {
+    height: 150px;
+    width: 200px;
+    background: white;
+    box-shadow: $circularShadow;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .message {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+  }
+}

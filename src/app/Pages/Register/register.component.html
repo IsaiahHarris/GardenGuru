@@ -1,0 +1,55 @@
+<div class="content-container">
+  <form enctype="multipart/form-data">
+    <div class="secondary-header">
+      <div>Register</div>
+    </div>
+    <label for="username">Username</label>
+    <input placeholder="5 to 16 character limit" maxlength="16" type="text" name="username" [(ngModel)]="registerFormData.username">
+    <span class="addCrop-error" *ngIf="usernameError" style="font-size:12px;color:red">Username must be at least five characters
+      long.
+    </span>
+    <span class="addCrop-error" *ngIf="error" style="font-size:12px;color:red">Username already exists.</span>
+    <span class="addCrop-error" *ngIf="invalidUsername" style="font-size:12px;color:red">You cannot use special characters.</span>
+    <label for="password">Password</label>
+    <input placeholder="5 to 16 character limit" maxlength="16" type="password" name="password" [(ngModel)]="registerFormData.password">
+    <span class="addCrop-error" *ngIf="passwordError" style="font-size:12px;color:red">Password must be at least five characters
+      long.
+    </span>
+    <label for="name">Name</label>
+    <div class="name-container">
+      <input type="first_name" name="first_name" placeholder="First" [(ngModel)]="registerFormData.first_name">
+      <input type="last_name" name="last_name" placeholder="Last" [(ngModel)]="registerFormData.last_name">
+    </div>
+    <span class="addCrop-error" *ngIf="realNameError" style="font-size:12px;color:red">Both fields are required.</span>
+    <label for="email">Email</label>
+    <input placeholder="Enter valid email address" type="text" name="email" [(ngModel)]="registerFormData.email">
+    <span class="addCrop-error" *ngIf="emailError" style="font-size:12px;color:red">Please enter a valid email address.</span>
+    <span class="addCrop-error" *ngIf="invalidEmail" style="font-size:12px;color:red">This field is required.</span>
+    <label for="location">Location</label>
+    <div class="location-container">
+      <select name="city" [(ngModel)]="registerFormData.city">
+        <option value="">Select City</option>
+        <option *ngFor="let city of cities" value="{{city}}">{{city}}</option>
+      </select>
+      <select name="state" [(ngModel)]="registerFormData.state">
+        <option value="">Select State</option>
+        <option *ngFor="let state of states" value="{{state}}">{{state}}</option>
+      </select>
+    </div>
+    <div class="avatar-upload">
+      <span class="addCrop-error" *ngIf="generalRegisterError" style="font-size:12px;color:red">Please fill in all the above
+        fields.
+      </span>
+      <label for="photo">Upload A Profile Pic</label>
+      <input type="file" name="photo" accept=".jpg, .jpeg, .png" (change)="getPhotoFile($event)">
+    </div>
+    <button class="register-button" (click)="register()">Register</button>
+  </form>
+</div>
+<div class="loading-modal" *ngIf="showLoading">
+  <div class="loading-spinner">
+    <div class="message" *ngIf="!loggingIn">Registering User</div>
+    <div class="message" *ngIf="loggingIn">Logging In</div>
+    <mat-spinner color="warn" diameter="60"></mat-spinner>
+  </div>
+</div>
